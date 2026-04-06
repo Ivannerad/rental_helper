@@ -1,0 +1,1 @@
+"""Userbot worker service package."""
