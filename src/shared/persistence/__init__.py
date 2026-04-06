@@ -1,1 +1,1 @@
-"""Shared persistence interfaces and repository abstractions."""
+"""Shared persistence interfaces, schema migrations, and repository abstractions."""

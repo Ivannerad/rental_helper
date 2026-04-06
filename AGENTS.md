@@ -20,6 +20,7 @@ Canonical local commands:
 - `python -m ruff check .` for linting
 - `python -m ruff format . --check` for format checks
 - `python -m pytest` to run tests
+- `python -m shared.persistence.migrator up` to apply schema migrations
 
 If you change tooling or commands, update this file and `README.md` in the same change.
 
