@@ -15,14 +15,13 @@ When adding code, keep the layout explicit:
 Avoid placing importable Python code at the repository root.
 
 ## Build, Test, and Development Commands
-No canonical build, run, lint, or test commands are defined yet. Do not invent project commands in commits or pull requests. If you introduce tooling, update this file in the same change.
-
-Expected examples once tooling exists:
-- `python -m pytest` to run tests
+Canonical local commands:
+- `python -m pip install -e '.[dev]'` to install project and developer tooling
 - `python -m ruff check .` for linting
-- `python -m ruff format .` for formatting
+- `python -m ruff format . --check` for format checks
+- `python -m pytest` to run tests
 
-Document any new local setup in [`README.md`](/home/ivan/work yourself/rental_helper/README.md).
+If you change tooling or commands, update this file and `README.md` in the same change.
 
 ## Coding Style & Naming Conventions
 The ignore rules indicate a Python workflow, so use standard Python conventions unless the repository adopts a formatter later:
@@ -34,7 +33,7 @@ The ignore rules indicate a Python workflow, so use standard Python conventions 
 Prefer type hints for new public functions and keep side-effect-heavy scripts inside `scripts/`.
 
 ## Testing Guidelines
-There is no test framework configured yet. New features should include tests under `tests/`, with files named `test_<feature>.py`. If you add a test runner or coverage tool, record the exact command here and in the README.
+Use `python -m pytest` for test execution. New features should include tests under `tests/`, with files named `test_<feature>.py`.
 
 ## Commit & Pull Request Guidelines
 The current history contains a single commit: `Initial commit`. No formal convention is established, so use short imperative commit subjects such as `Add lease parser module`.
