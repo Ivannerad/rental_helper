@@ -29,13 +29,9 @@ def _test_connection() -> Iterator[psycopg.Connection]:
     with psycopg.connect(_postgres_dsn()) as connection:
         connection.autocommit = True
         with connection.cursor() as cursor:
+            cursor.execute(sql.SQL("CREATE SCHEMA {}").format(sql.Identifier(schema_name)))
             cursor.execute(
-                sql.SQL("CREATE SCHEMA {}").format(sql.Identifier(schema_name))
-            )
-            cursor.execute(
-                sql.SQL("SET search_path TO {}, public").format(
-                    sql.Identifier(schema_name)
-                )
+                sql.SQL("SET search_path TO {}, public").format(sql.Identifier(schema_name))
             )
         connection.autocommit = False
 
@@ -46,9 +42,7 @@ def _test_connection() -> Iterator[psycopg.Connection]:
             connection.autocommit = True
             with connection.cursor() as cursor:
                 cursor.execute(
-                    sql.SQL("DROP SCHEMA {} CASCADE").format(
-                        sql.Identifier(schema_name)
-                    )
+                    sql.SQL("DROP SCHEMA {} CASCADE").format(sql.Identifier(schema_name))
                 )
 
 
@@ -67,9 +61,7 @@ def test_apply_up_is_idempotent_and_apply_down_removes_tables() -> None:
         assert apply_up(connection, migrations) == []
 
         with connection.cursor() as cursor:
-            cursor.execute(
-                "SELECT to_regclass(current_schema() || '.managed_accounts')"
-            )
+            cursor.execute("SELECT to_regclass(current_schema() || '.managed_accounts')")
             assert cursor.fetchone()[0] == "managed_accounts"
 
             cursor.execute("SELECT version FROM schema_migrations ORDER BY version")
@@ -78,9 +70,7 @@ def test_apply_up_is_idempotent_and_apply_down_removes_tables() -> None:
         assert apply_down(connection, migrations, steps=1) == ["0001_initial_schema"]
 
         with connection.cursor() as cursor:
-            cursor.execute(
-                "SELECT to_regclass(current_schema() || '.managed_accounts')"
-            )
+            cursor.execute("SELECT to_regclass(current_schema() || '.managed_accounts')")
             assert cursor.fetchone()[0] is None
 
             cursor.execute("SELECT COUNT(*) FROM schema_migrations")
@@ -104,9 +94,7 @@ def test_apply_reset_creates_schema_and_supports_basic_persistence() -> None:
         apply_reset(connection, migrations)
 
         with connection.cursor() as cursor:
-            cursor.execute(
-                "SELECT to_regclass(current_schema() || '.managed_accounts')"
-            )
+            cursor.execute("SELECT to_regclass(current_schema() || '.managed_accounts')")
             assert cursor.fetchone()[0] == "managed_accounts"
 
             cursor.execute(
