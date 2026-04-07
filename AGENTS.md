@@ -21,6 +21,8 @@ Canonical local commands:
 - `python -m ruff format . --check` for format checks
 - `python -m pytest` to run tests
 - `python -m shared.persistence.migrator up` to apply schema migrations
+- `docker compose up -d` to start local PostgreSQL and RabbitMQ dependencies
+- `docker compose down` to stop the local dependency stack
 
 If you change tooling or commands, update this file and `README.md` in the same change.
 
