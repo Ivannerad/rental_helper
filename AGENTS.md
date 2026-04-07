@@ -49,3 +49,15 @@ Pull requests should include:
 
 ## Repository Maintenance
 Keep `AGENTS.md` repository-specific. If you add core tooling, directories, or architectural constraints, update this guide immediately so future contributors inherit the current workflow instead of guessing.
+
+## Task Context Documents
+For large-repository agent runs, prefer the compact context files under `docs/task_context/` before scanning broad directories:
+- `architecture_schema.md`
+- `domain_schema.md`
+- `database_schema.md`
+- `repository_contract.md`
+- `file_map.md`
+- `testing_contract.md`
+- `workflow_contract.md`
+
+If a change updates one of those source-of-truth areas, update the matching context file in the same change.
