@@ -55,6 +55,17 @@ python -m ruff format . --check
 python -m pytest
 ```
 
+### Local infrastructure
+
+```bash
+docker compose up -d
+docker compose ps
+docker compose down
+```
+
+This starts local PostgreSQL and RabbitMQ instances for development and test runs.
+The default connection settings match the example environment variables below.
+
 ### Migrations
 
 ```bash
@@ -78,7 +89,7 @@ before recreating them.
 export TELEGRAM_API_ID=123456
 export TELEGRAM_API_HASH="your-telegram-api-hash"
 export TELEGRAM_BOT_TOKEN="123456:telegram-bot-token"
-export POSTGRES_DSN="postgresql://user:pass@localhost:5432/rental_helper"
+export POSTGRES_DSN="postgresql://rental_helper:rental_helper@localhost:5432/rental_helper"
 export RABBITMQ_DSN="amqp://guest:guest@localhost:5672/"
 export LLM_PROVIDER="openai"
 export LLM_API_KEY="sk-..."
@@ -90,3 +101,16 @@ export USERBOT_WORKER_CONCURRENCY=4
 ```
 
 Never commit real secrets or production credentials.
+
+## CI
+
+GitHub Actions runs the repository checks in `.github/workflows/ci.yml`:
+
+```bash
+python -m ruff check .
+python -m ruff format . --check
+python -m pytest
+```
+
+The workflow provisions PostgreSQL as a service and sets placeholder environment variables
+so configuration-dependent tests and persistence tests can run in CI.
