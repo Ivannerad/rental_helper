@@ -55,6 +55,23 @@ python -m ruff format . --check
 python -m pytest
 ```
 
+### Migrations
+
+```bash
+# Apply all pending migrations
+python -m shared.persistence.migrator up
+
+# Roll back the latest migration
+python -m shared.persistence.migrator down
+
+# Recreate schema from scratch (down all + up all)
+python -m shared.persistence.migrator reset
+```
+
+The migration runner uses `POSTGRES_DSN` by default. You can override with `--dsn`.
+Use a dedicated local database or schema for `reset`, because it drops the managed tables
+before recreating them.
+
 ## Example environment variables
 
 ```bash

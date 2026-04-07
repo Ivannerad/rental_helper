@@ -8,7 +8,9 @@ version = "0.1.0"
 description = "Service-oriented monorepo scaffold for Telegram rental assistant services"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+  "psycopg[binary]>=3.1",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -21,6 +23,9 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+"shared.persistence" = ["migrations/*.sql"]
 
 [tool.ruff]
 line-length = 100
